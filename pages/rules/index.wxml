@@ -1,0 +1,41 @@
+<view class="page">
+  <view class="hero">
+    <view class="hero-kicker">四人结对 · 两副牌</view>
+    <view class="hero-title">把掼蛋规则一次看明白</view>
+    <view class="hero-desc">六节短课。点牌型看例子，点两手牌比谁更大。</view>
+    <view class="hero-cards">
+      <card-row cards="{{heroCards}}" size="sm" />
+    </view>
+    <view class="hero-progress">
+      <view class="bar hero-bar">
+        <view class="bar-in" style="width: {{percent}}%;"></view>
+      </view>
+      <text class="hero-count">已学 {{read}}/{{total}}</text>
+    </view>
+    <view class="btn light" hover-class="btn-hover" bindtap="continueStudy">{{continueLabel}}</view>
+  </view>
+
+  <view
+    class="lesson"
+    wx:for="{{list}}"
+    wx:key="id"
+    data-id="{{item.id}}"
+    bindtap="openLesson"
+    hover-class="lesson-hover"
+  >
+    <view class="idx">{{item.no}}</view>
+    <view class="lesson-main">
+      <view class="lesson-title">{{item.title}}</view>
+      <view class="lesson-sub">{{item.summary}}</view>
+    </view>
+    <view class="tag {{item.done ? 'done' : ''}}">{{item.done ? '已学' : item.minutes + ' 分钟'}}</view>
+  </view>
+
+  <view class="link-row" bindtap="openNote" hover-class="lesson-hover">
+    <view class="lesson-main">
+      <view class="lesson-title">规则口径</view>
+      <view class="lesson-sub">还贡、炸弹大小和过 A，本教程认定的那一版。</view>
+    </view>
+    <text class="chev">›</text>
+  </view>
+</view>

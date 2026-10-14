@@ -1,0 +1,15 @@
+<view class="row {{nowrap ? 'nowrap' : ''}}">
+  <poker-card
+    wx:for="{{cards}}"
+    wx:key="id"
+    rank="{{item.rank}}"
+    suit="{{item.suit}}"
+    wild="{{item.wild}}"
+    badge="{{item.badge}}"
+    as-rank="{{item.asRank}}"
+    size="{{size}}"
+    dim="{{item.dim}}"
+    tappable="{{tappable}}"
+    bind:cardtap="onCardTap"
+  />
+</view>

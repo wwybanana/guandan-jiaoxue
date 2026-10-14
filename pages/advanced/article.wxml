@@ -1,0 +1,27 @@
+<view class="page" wx:if="{{missing}}">
+  <view class="panel">
+    <view class="h2 tight">没有找到这篇文章</view>
+    <view class="p">回到进阶目录再选一次。</view>
+  </view>
+  <view class="btn" hover-class="btn-hover" bindtap="back">返回</view>
+</view>
+
+<view class="page" wx:if="{{article}}">
+  <view class="page-kicker">拆牌思路 · 约 {{article.minutes}} 分钟</view>
+  <view class="page-title">{{article.title}}</view>
+  <view class="page-summary">{{article.summary}}</view>
+  <block wx:for="{{article.blocks}}" wx:for-item="block" wx:key="id">
+    <view wx:if="{{block.type === 'h2'}}" class="h2">{{block.text}}</view>
+    <view wx:elif="{{block.type === 'p'}}" class="p">{{block.text}}</view>
+    <view wx:elif="{{block.type === 'note'}}" class="note">{{block.text}}</view>
+    <view wx:elif="{{block.type === 'tip'}}" class="tip">{{block.text}}</view>
+    <view wx:elif="{{block.type === 'cards'}}" class="panel">
+      <view class="caption" wx:if="{{block.caption}}">{{block.caption}}</view>
+      <card-row cards="{{block.cards}}" />
+    </view>
+  </block>
+  <view class="pager">
+    <view class="pager-btn {{prevId ? '' : 'disabled'}}" hover-class="btn-hover" bindtap="goPrev">上一篇</view>
+    <view class="pager-btn solid" hover-class="btn-hover" bindtap="goNext">{{nextId ? '下一篇' : '返回目录'}}</view>
+  </view>
+</view>

@@ -1,0 +1,40 @@
+<view class="page">
+  <view class="hero">
+    <view class="hero-kicker">只存在这台手机上</view>
+    <view class="hero-title">{{headline}}</view>
+    <view class="hero-desc">{{suggestion}}</view>
+    <view class="btn light" hover-class="btn-hover" bindtap="goRules">去规则学习</view>
+  </view>
+
+  <view class="panel" wx:for="{{stats}}" wx:key="key">
+    <view class="stat-top">
+      <text class="stat-name">{{item.name}}</text>
+      <text class="stat-num">{{item.done}}/{{item.total}}</text>
+    </view>
+    <view class="bar">
+      <view class="bar-in" style="width: {{item.percent}}%;"></view>
+    </view>
+    <view class="gap"></view>
+  </view>
+
+  <view class="section-label">
+    <text class="name">测验得分</text>
+  </view>
+  <view
+    class="entry"
+    wx:for="{{quizStats}}"
+    wx:key="id"
+    data-id="{{item.id}}"
+    bindtap="openQuiz"
+    hover-class="lesson-hover"
+  >
+    <view class="lesson-main">
+      <view class="lesson-title">{{item.title}}</view>
+      <view class="lesson-sub">{{item.label}}</view>
+    </view>
+    <text class="chev">›</text>
+  </view>
+
+  <view class="btn ghost" hover-class="btn-hover" bindtap="openNote">查看规则口径</view>
+  <view class="btn ghost danger" hover-class="btn-hover" bindtap="reset">清空学习记录</view>
+</view>

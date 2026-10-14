@@ -1,0 +1,53 @@
+{
+  "pages": [
+    "pages/rules/index",
+    "pages/rules/detail",
+    "pages/rules/note",
+    "pages/advanced/index",
+    "pages/advanced/article",
+    "pages/advanced/endgame",
+    "pages/quiz/play",
+    "pages/mine/index"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#1b4332",
+    "navigationBarTitleText": "掼蛋课堂",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f3ecdf",
+    "backgroundColorTop": "#1b4332",
+    "backgroundColorBottom": "#f3ecdf",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#8a8175",
+    "selectedColor": "#1b4332",
+    "backgroundColor": "#fffaf3",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/rules/index",
+        "text": "规则学习",
+        "iconPath": "assets/tab/rules.png",
+        "selectedIconPath": "assets/tab/rules-on.png"
+      },
+      {
+        "pagePath": "pages/advanced/index",
+        "text": "进阶提升",
+        "iconPath": "assets/tab/advanced.png",
+        "selectedIconPath": "assets/tab/advanced-on.png"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "text": "我的",
+        "iconPath": "assets/tab/mine.png",
+        "selectedIconPath": "assets/tab/mine-on.png"
+      }
+    ]
+  },
+  "usingComponents": {
+    "poker-card": "/components/poker-card/index",
+    "card-row": "/components/card-row/index"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

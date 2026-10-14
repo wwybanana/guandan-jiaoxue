@@ -1,0 +1,41 @@
+<view class="page" wx:if="{{missing}}">
+  <view class="panel">
+    <view class="h2 tight">没有找到这道残局</view>
+  </view>
+  <view class="btn" hover-class="btn-hover" bindtap="back">返回</view>
+</view>
+
+<view class="page" wx:if="{{item}}">
+  <view class="lv {{tone}}">{{item.level}}</view>
+  <view class="page-title">{{item.title}}</view>
+  <view class="p">{{item.situation}}</view>
+
+  <block wx:if="{{item.groups.length}}">
+    <view class="panel" wx:for="{{item.groups}}" wx:for-item="group" wx:for-index="gi" wx:key="gi">
+      <view class="caption">{{group.caption}}</view>
+      <card-row cards="{{group.cards}}" size="sm" />
+    </view>
+  </block>
+
+  <view class="prompt">{{item.prompt}}</view>
+  <view
+    class="opt {{picked === opt.id ? 'on' : ''}} {{locked && opt.id === item.answer ? 'right' : ''}} {{locked && picked === opt.id && opt.id !== item.answer ? 'wrong' : ''}}"
+    wx:for="{{item.options}}"
+    wx:for-item="opt"
+    wx:for-index="oi"
+    wx:key="id"
+    data-opt="{{opt.id}}"
+    bindtap="choose"
+  >
+    <view class="opt-head">
+      <text class="opt-key">{{letters[oi]}}</text>
+      <text class="opt-text">{{opt.text}}</text>
+    </view>
+  </view>
+
+  <view class="explain" wx:if="{{locked}}">
+    <text class="explain-flag">{{picked === item.answer ? '这手更合适' : '可以换个看法'}}</text>
+    {{item.explain}}
+  </view>
+  <view class="caption" wx:if="{{!locked}}">点一个做法，马上看要点。看完会记入进度。</view>
+</view>

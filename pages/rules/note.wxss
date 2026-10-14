@@ -1,0 +1,3 @@
+.panel .p {
+  margin-bottom: 8rpx;
+}

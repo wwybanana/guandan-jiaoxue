@@ -1,0 +1,154 @@
+<view class="page" wx:if="{{missing}}">
+  <view class="panel">
+    <view class="h2 tight">没有找到这一课</view>
+    <view class="p">回到目录再选一次。</view>
+  </view>
+  <view class="btn" hover-class="btn-hover" bindtap="backHome">回规则学习</view>
+</view>
+
+<view class="page" wx:if="{{lesson}}">
+  <view class="page-kicker">第 {{lesson.no}} 课 · 约 {{lesson.minutes}} 分钟</view>
+  <view class="page-title">{{lesson.title}}</view>
+  <view class="page-summary">{{lesson.summary}}</view>
+
+  <block wx:for="{{lesson.blocks}}" wx:for-item="block" wx:key="id">
+    <view wx:if="{{block.type === 'h2'}}" class="h2">{{block.text}}</view>
+    <view wx:elif="{{block.type === 'p'}}" class="p">{{block.text}}</view>
+    <view wx:elif="{{block.type === 'note'}}" class="note">{{block.text}}</view>
+    <view wx:elif="{{block.type === 'tip'}}" class="tip">{{block.text}}</view>
+
+    <view wx:elif="{{block.type === 'cards'}}" class="panel">
+      <view class="caption {{block.tone === 'bad' ? 'bad' : ''}}" wx:if="{{block.caption}}">{{block.caption}}</view>
+      <card-row cards="{{block.cards}}" />
+      <view class="detail" wx:if="{{block.detail}}">{{block.detail}}</view>
+    </view>
+
+    <view wx:elif="{{block.type === 'seats'}}" class="desk">
+      <view class="seat north">
+        <text class="who">对家</text>
+        <text class="role">队友</text>
+      </view>
+      <view class="mid">
+        <view class="seat west">
+          <text class="who">上家</text>
+          <text class="role">对手</text>
+        </view>
+        <view class="felt">
+          <text class="felt-title">逆时针</text>
+          <text class="felt-sub">你 → 下家 → 对家 → 上家</text>
+        </view>
+        <view class="seat east">
+          <text class="who">下家</text>
+          <text class="role">下一位</text>
+        </view>
+      </view>
+      <view class="seat south me">
+        <text class="who">你</text>
+        <text class="role">与对家一队</text>
+      </view>
+    </view>
+
+    <view wx:elif="{{block.type === 'table'}}" class="panel">
+      <view class="caption" wx:if="{{block.caption}}">{{block.caption}}</view>
+      <view class="tr head">
+        <view class="td" wx:for="{{block.headers}}" wx:for-item="cell" wx:for-index="ci" wx:key="ci">{{cell}}</view>
+      </view>
+      <view class="tr" wx:for="{{block.rows}}" wx:for-item="row" wx:for-index="ri" wx:key="ri">
+        <view class="td" wx:for="{{row}}" wx:for-item="cell" wx:for-index="ci" wx:key="ci">{{cell}}</view>
+      </view>
+    </view>
+
+    <view wx:elif="{{block.type === 'steps'}}" class="steps">
+      <view class="step" wx:for="{{block.items}}" wx:for-item="step" wx:for-index="si" wx:key="si">
+        <view class="step-no">{{si + 1}}</view>
+        <view class="step-body">
+          <view class="step-title">{{step.title}}</view>
+          <view class="step-text">{{step.text}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:elif="{{block.type === 'track'}}" class="panel">
+      <view class="p">{{block.text}}</view>
+      <view class="pills">
+        <view class="pill" wx:for="{{levels}}" wx:for-item="lv" wx:key="*this">{{lv}}</view>
+      </view>
+    </view>
+
+    <view wx:elif="{{block.type === 'level'}}" class="panel">
+      <view class="caption">{{block.text}}</view>
+      <scroll-view scroll-x class="scroller" show-scrollbar="{{false}}">
+        <view class="strip">
+          <card-row cards="{{rankCards}}" size="sm" nowrap="{{true}}" tappable="{{true}}" bind:cardtap="onRankTap" />
+        </view>
+      </scroll-view>
+      <view class="level-picks">
+        <view
+          class="chip {{currentLevel === lv ? 'on' : ''}}"
+          wx:for="{{levels}}"
+          wx:for-item="lv"
+          wx:key="*this"
+          data-lv="{{lv}}"
+          bindtap="setLevel"
+        >打{{lv}}</view>
+      </view>
+      <view class="rank-hint">{{rankHintText}}</view>
+    </view>
+
+    <view wx:elif="{{block.type === 'gallery'}}" class="panel">
+      <view class="caption">{{block.text}}</view>
+      <view class="chips">
+        <view
+          class="chip {{galleryPick[block.id] === g.id ? 'on' : ''}}"
+          wx:for="{{block.items}}"
+          wx:for-item="g"
+          wx:key="id"
+          data-gid="{{block.id}}"
+          data-pick="{{g.id}}"
+          bindtap="pickGallery"
+        >{{g.name}}</view>
+      </view>
+      <block wx:for="{{block.items}}" wx:for-item="g" wx:key="id">
+        <block wx:if="{{galleryPick[block.id] === g.id}}">
+          <card-row cards="{{g.cards}}" />
+          <view class="detail">{{g.detail}}</view>
+        </block>
+      </block>
+    </view>
+
+    <view wx:elif="{{block.type === 'compare'}}" class="panel">
+      <view class="prompt">{{block.prompt}}</view>
+      <view class="sides">
+        <view
+          class="side {{compareShow[block.id] && block.answer === 'left' ? 'is-answer' : ''}} {{compareShow[block.id] && comparePick[block.id] === 'left' && block.answer !== 'left' ? 'is-wrong' : ''}}"
+          data-bid="{{block.id}}"
+          data-side="left"
+          bindtap="pickCompare"
+          bind:cardtap="pickCompare"
+        >
+          <view class="side-name">{{block.left.name}}</view>
+          <card-row cards="{{block.left.cards}}" size="sm" />
+        </view>
+        <view
+          class="side {{compareShow[block.id] && block.answer === 'right' ? 'is-answer' : ''}} {{compareShow[block.id] && comparePick[block.id] === 'right' && block.answer !== 'right' ? 'is-wrong' : ''}}"
+          data-bid="{{block.id}}"
+          data-side="right"
+          bindtap="pickCompare"
+          bind:cardtap="pickCompare"
+        >
+          <view class="side-name">{{block.right.name}}</view>
+          <card-row cards="{{block.right.cards}}" size="sm" />
+        </view>
+      </view>
+      <view class="explain" wx:if="{{compareShow[block.id]}}">{{block.explain}}</view>
+      <view class="caption" wx:if="{{!compareShow[block.id]}}">点一手牌，看判断对不对</view>
+    </view>
+  </block>
+
+  <view class="pager">
+    <view class="pager-btn {{prevId ? '' : 'disabled'}}" hover-class="btn-hover" bindtap="goPrev">上一课</view>
+    <view class="pager-btn solid" hover-class="btn-hover" bindtap="goNext">{{nextId ? '下一课' : '回到目录'}}</view>
+  </view>
+  <view class="gap"></view>
+  <view wx:if="{{lesson.id === 'match'}}" class="btn" hover-class="btn-hover" bindtap="goAdvanced">去进阶提升练几题</view>
+</view>

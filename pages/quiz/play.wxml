@@ -1,0 +1,67 @@
+<view class="page" wx:if="{{missing}}">
+  <view class="panel">
+    <view class="h2 tight">没有找到这套测验</view>
+  </view>
+  <view class="btn" hover-class="btn-hover" bindtap="back">返回</view>
+</view>
+
+<view class="page" wx:if="{{quiz && phase === 'play'}}">
+  <view class="q-count">{{quiz.title}} · 第 {{cursor + 1}} / {{total}} 题</view>
+  <view class="dots">
+    <view
+      class="dot {{qi < cursor ? 'done' : ''}} {{qi === cursor ? 'now' : ''}}"
+      wx:for="{{quiz.questions}}"
+      wx:for-item="q"
+      wx:for-index="qi"
+      wx:key="id"
+    ></view>
+  </view>
+  <view class="stem">{{current.stem}}</view>
+
+  <view class="panel" wx:if="{{current.lead}}">
+    <view class="caption">{{current.lead.caption}}</view>
+    <card-row cards="{{current.lead.cards}}" size="sm" />
+  </view>
+  <view class="panel" wx:if="{{current.hand}}">
+    <view class="caption">{{current.hand.caption}}</view>
+    <card-row cards="{{current.hand.cards}}" size="sm" />
+  </view>
+
+  <view
+    class="opt {{picked === opt.id ? 'on' : ''}} {{locked && opt.id === current.answer ? 'right' : ''}} {{locked && picked === opt.id && opt.id !== current.answer ? 'wrong' : ''}}"
+    wx:for="{{current.options}}"
+    wx:for-item="opt"
+    wx:for-index="oi"
+    wx:key="id"
+    data-opt="{{opt.id}}"
+    bindtap="pick"
+    bind:cardtap="pick"
+  >
+    <view class="opt-head">
+      <text class="opt-key">{{letters[oi]}}</text>
+      <text class="opt-text">{{opt.text}}</text>
+    </view>
+    <card-row wx:if="{{opt.cards && opt.cards.length}}" cards="{{opt.cards}}" size="sm" />
+  </view>
+
+  <view wx:if="{{!locked}}" class="btn {{picked ? '' : 'disabled'}}" hover-class="btn-hover" bindtap="confirm">确认答案</view>
+  <block wx:else>
+    <view class="explain">
+      <text class="explain-flag">{{picked === current.answer ? '答对了' : '这题可以再看一眼'}}</text>
+      {{current.explain}}
+    </view>
+    <view class="btn" hover-class="btn-hover" bindtap="next">{{cursor + 1 === total ? '查看得分' : '下一题'}}</view>
+  </block>
+</view>
+
+<view class="page" wx:if="{{quiz && phase === 'result'}}">
+  <view class="page-kicker">{{quiz.title}}</view>
+  <view class="score-num">{{correctCount}}</view>
+  <view class="score-total">/ {{total}} 题</view>
+  <view class="panel">
+    <view class="p">{{comment}}</view>
+    <view class="caption">最好成绩 {{record.best}}/{{record.total}} · 已做 {{record.times}} 次</view>
+  </view>
+  <view class="btn" hover-class="btn-hover" bindtap="retry">再做一次</view>
+  <view class="btn ghost" hover-class="btn-hover" bindtap="back">返回进阶</view>
+</view>

@@ -1,0 +1,3 @@
+.panel .bar {
+  margin-bottom: 12rpx;
+}

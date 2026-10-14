@@ -1,0 +1,165 @@
+.card {
+  width: 96rpx;
+  height: 132rpx;
+  margin: 0 12rpx 12rpx 0;
+  background: #fffefb;
+  border-radius: 12rpx;
+  border: 2rpx solid #e6dccb;
+  box-shadow: 0 8rpx 16rpx rgba(36, 28, 16, 0.08);
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.card.sm {
+  width: 76rpx;
+  height: 104rpx;
+  border-radius: 10rpx;
+}
+
+.card.lg {
+  width: 116rpx;
+  height: 160rpx;
+}
+
+.card.red .rank,
+.card.red .suit,
+.card.red .pip {
+  color: #c44536;
+}
+
+.card.black .rank,
+.card.black .suit,
+.card.black .pip {
+  color: #1c1915;
+}
+
+.corner {
+  position: absolute;
+  top: 8rpx;
+  left: 8rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+
+.rank {
+  font-size: 26rpx;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.rank.long {
+  font-size: 20rpx;
+  letter-spacing: -1rpx;
+}
+
+.suit {
+  font-size: 18rpx;
+  margin-top: 2rpx;
+}
+
+.pip {
+  font-size: 44rpx;
+  line-height: 1;
+}
+
+.card.sm .rank {
+  font-size: 22rpx;
+}
+
+.card.sm .rank.long {
+  font-size: 18rpx;
+}
+
+.card.sm .suit {
+  font-size: 16rpx;
+}
+
+.card.sm .pip {
+  font-size: 32rpx;
+}
+
+.card.sm .corner {
+  top: 6rpx;
+  left: 6rpx;
+}
+
+.badge {
+  position: absolute;
+  top: 6rpx;
+  right: 6rpx;
+  min-width: 22rpx;
+  padding: 2rpx 6rpx;
+  border-radius: 6rpx;
+  background: #a67c3d;
+  color: #fffaf3;
+  font-size: 16rpx;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.badge.wild-badge {
+  background: #b23a2f;
+}
+
+.as {
+  position: absolute;
+  left: 6rpx;
+  bottom: 6rpx;
+  font-size: 16rpx;
+  font-weight: 700;
+  line-height: 1;
+  color: #8a5a12;
+}
+
+.card.wild {
+  border-color: #d4b36a;
+  box-shadow: 0 0 0 2rpx rgba(166, 124, 61, 0.28), 0 8rpx 16rpx rgba(36, 28, 16, 0.08);
+}
+
+.card.joker {
+  background: #243044;
+  border-color: #243044;
+  flex-direction: column;
+}
+
+.card.joker.big {
+  background: #9d2f28;
+  border-color: #9d2f28;
+}
+
+.joker-sub,
+.joker-name {
+  color: #fffaf3;
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.joker-sub {
+  font-size: 22rpx;
+}
+
+.joker-name {
+  font-size: 36rpx;
+}
+
+.card.sm .joker-sub {
+  font-size: 18rpx;
+}
+
+.card.sm .joker-name {
+  font-size: 28rpx;
+}
+
+.card.dim {
+  opacity: 0.38;
+}
+
+.card.tap:active {
+  transform: translateY(-8rpx);
+}

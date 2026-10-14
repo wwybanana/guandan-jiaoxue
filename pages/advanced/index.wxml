@@ -1,0 +1,72 @@
+<view class="page">
+  <view class="hero">
+    <view class="hero-kicker">拆牌 · 残局 · 情景题</view>
+    <view class="hero-title">会认牌之后，练怎么出</view>
+    <view class="hero-desc">短文讲组合，残局按难度分，测验分数记在本机。</view>
+    <view class="hero-progress">
+      <text class="hero-count">文章 {{articleRead}}/{{articleTotal}} · 残局 {{endgameRead}}/{{endgameTotal}}</text>
+    </view>
+  </view>
+
+  <view class="section-label">
+    <text class="name">拆牌思路</text>
+    <text class="meta">{{articleTotal}} 篇</text>
+  </view>
+  <view
+    class="lesson"
+    wx:for="{{articles}}"
+    wx:key="id"
+    data-id="{{item.id}}"
+    bindtap="openArticle"
+    hover-class="lesson-hover"
+  >
+    <view class="idx soft">{{item.no}}</view>
+    <view class="lesson-main">
+      <view class="lesson-title">{{item.title}}</view>
+      <view class="lesson-sub">{{item.summary}}</view>
+    </view>
+    <view class="tag {{item.done ? 'done' : ''}}">{{item.done ? '已读' : item.minutes + ' 分钟'}}</view>
+  </view>
+
+  <view class="section-label">
+    <text class="name">残局与控牌</text>
+    <text class="meta">点开即练</text>
+  </view>
+  <block wx:for="{{groups}}" wx:for-item="group" wx:key="level">
+    <view class="diff {{group.tone}}">{{group.level}}</view>
+    <view
+      class="entry"
+      wx:for="{{group.items}}"
+      wx:for-item="item"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindtap="openEndgame"
+      hover-class="lesson-hover"
+    >
+      <view class="lesson-main">
+        <view class="lesson-title">{{item.title}}</view>
+      </view>
+      <view class="tag {{item.done ? 'done' : ''}}">{{item.done ? '已看' : '去判断'}}</view>
+    </view>
+  </block>
+
+  <view class="section-label">
+    <text class="name">情景测验</text>
+    <text class="meta">本地判题</text>
+  </view>
+  <view
+    class="lesson"
+    wx:for="{{quizzes}}"
+    wx:key="id"
+    data-id="{{item.id}}"
+    bindtap="openQuiz"
+    hover-class="lesson-hover"
+  >
+    <view class="lesson-main">
+      <view class="lesson-title">{{item.title}}</view>
+      <view class="lesson-sub">{{item.summary}}</view>
+      <view class="lesson-sub">{{item.label}}</view>
+    </view>
+    <text class="chev">›</text>
+  </view>
+</view>

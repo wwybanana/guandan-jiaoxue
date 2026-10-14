@@ -1,0 +1,18 @@
+<view
+  class="card {{size}} {{red ? 'red' : 'black'}} {{joker ? 'joker' : ''}} {{big ? 'big' : ''}} {{wild ? 'wild' : ''}} {{dim ? 'dim' : ''}} {{tappable ? 'tap' : ''}}"
+  bindtap="onTap"
+>
+  <block wx:if="{{joker}}">
+    <text class="joker-sub">{{big ? '大' : '小'}}</text>
+    <text class="joker-name">王</text>
+  </block>
+  <block wx:else>
+    <view class="corner">
+      <text class="rank {{longRank ? 'long' : ''}}">{{label}}</text>
+      <text class="suit">{{symbol}}</text>
+    </view>
+    <text class="pip">{{symbol}}</text>
+    <text class="as" wx:if="{{asRank}}">作{{asRank}}</text>
+    <text class="badge {{badge === '配' ? 'wild-badge' : ''}}" wx:if="{{badge}}">{{badge}}</text>
+  </block>
+</view>

@@ -1,0 +1,9 @@
+<view class="page">
+  <view class="page-kicker">开新桌前先对齐这几条</view>
+  <view class="page-title">{{note.title}}</view>
+  <view class="page-summary">{{note.lead}}</view>
+  <view class="panel" wx:for="{{note.items}}" wx:key="title">
+    <view class="h2 tight">{{item.title}}</view>
+    <view class="p">{{item.text}}</view>
+  </view>
+</view>
