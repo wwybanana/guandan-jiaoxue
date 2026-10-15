@@ -1,5 +1,6 @@
 const { articles } = require('../../data/articles')
 const progress = require('../../utils/progress')
+const share = require('../../utils/share')
 
 function findArticle(id) {
   for (let i = 0; i < articles.length; i += 1) {
@@ -14,6 +15,9 @@ Page({
     missing: false,
     prevId: '',
     nextId: ''
+  },
+  onShow() {
+    share.enable()
   },
   onLoad(query) {
     const found = findArticle(query.id)
@@ -48,5 +52,15 @@ Page({
         wx.switchTab({ url: '/pages/advanced/index' })
       }
     })
+  },
+  onShareAppMessage() {
+    const article = this.data.article
+    if (!article) return share.message('掼蛋课堂：会认牌之后，练怎么出', '/pages/advanced/index')
+    return share.message('掼蛋课堂：' + article.title, '/pages/advanced/article?id=' + article.id)
+  },
+  onShareTimeline() {
+    const article = this.data.article
+    if (!article) return share.timeline('掼蛋课堂：会认牌之后，练怎么出')
+    return share.timeline('掼蛋课堂：' + article.title, 'id=' + article.id)
   }
 })

@@ -51,6 +51,9 @@ if (app) {
       if (!fs.existsSync(path.join(root, page + ext))) errors.push('missing ' + page + ext)
     })
     readJSON(page + '.json')
+    const js = fs.readFileSync(path.join(root, page + '.js'), 'utf8')
+    if (!/onShareAppMessage\s*\(/.test(js)) errors.push(page + ' missing onShareAppMessage')
+    if (!/onShareTimeline\s*\(/.test(js)) errors.push(page + ' missing onShareTimeline')
   })
   const tabPages = {}
   app.pages.forEach((page) => {

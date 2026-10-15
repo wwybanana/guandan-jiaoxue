@@ -1,5 +1,6 @@
 const { lessons } = require('../../data/lessons')
 const progress = require('../../utils/progress')
+const share = require('../../utils/share')
 const { LEVELS, rankStrip, rankHint } = require('../../utils/ranks')
 
 function findLesson(id) {
@@ -25,6 +26,9 @@ Page({
   },
   onLoad(query) {
     this.loadLesson(query.id)
+  },
+  onShow() {
+    share.enable()
   },
   loadLesson(id) {
     const found = findLesson(id)
@@ -102,5 +106,15 @@ Page({
   },
   backHome() {
     wx.switchTab({ url: '/pages/rules/index' })
+  },
+  onShareAppMessage() {
+    const lesson = this.data.lesson
+    if (!lesson) return share.message('掼蛋课堂：六节课看懂规则', '/pages/rules/index')
+    return share.message('掼蛋课堂：' + lesson.title, '/pages/rules/detail?id=' + lesson.id)
+  },
+  onShareTimeline() {
+    const lesson = this.data.lesson
+    if (!lesson) return share.timeline('掼蛋课堂：六节课看懂规则')
+    return share.timeline('掼蛋课堂：' + lesson.title, 'id=' + lesson.id)
   }
 })

@@ -3,6 +3,7 @@ const { articles } = require('../../data/articles')
 const { endgames } = require('../../data/endgames')
 const { quizzes } = require('../../data/quizzes')
 const progress = require('../../utils/progress')
+const share = require('../../utils/share')
 
 function percent(done, total) {
   if (!total) return 0
@@ -45,6 +46,7 @@ Page({
     this.refresh()
   },
   onShow() {
+    share.enable()
     this.refresh()
   },
   refresh() {
@@ -98,5 +100,11 @@ Page({
         wx.showToast({ title: '已清空', icon: 'none' })
       }
     })
+  },
+  onShareAppMessage() {
+    return share.message('掼蛋课堂：我的学习进度', '/pages/mine/index')
+  },
+  onShareTimeline() {
+    return share.timeline('掼蛋课堂：我的学习进度')
   }
 })

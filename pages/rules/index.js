@@ -1,6 +1,7 @@
 const { lessons } = require('../../data/lessons')
 const { C } = require('../../utils/cards')
 const progress = require('../../utils/progress')
+const share = require('../../utils/share')
 
 const heroCards = [
   C('hero-2', '2', 'H', '配'),
@@ -22,6 +23,7 @@ Page({
     this.refresh()
   },
   onShow() {
+    share.enable()
     this.refresh()
   },
   refresh() {
@@ -69,9 +71,9 @@ Page({
     wx.navigateTo({ url: '/pages/rules/note' })
   },
   onShareAppMessage() {
-    return {
-      title: '掼蛋课堂：六节课看懂规则',
-      path: '/pages/rules/index'
-    }
+    return share.message('掼蛋课堂：六节课看懂规则', '/pages/rules/index')
+  },
+  onShareTimeline() {
+    return share.timeline('掼蛋课堂：六节课看懂规则')
   }
 })

@@ -2,6 +2,7 @@ const { articles } = require('../../data/articles')
 const { endgames } = require('../../data/endgames')
 const { quizzes } = require('../../data/quizzes')
 const progress = require('../../utils/progress')
+const share = require('../../utils/share')
 
 const LEVELS = ['初级', '中级', '高级']
 
@@ -19,6 +20,7 @@ Page({
     this.refresh()
   },
   onShow() {
+    share.enable()
     this.refresh()
   },
   refresh() {
@@ -82,5 +84,11 @@ Page({
   },
   openQuiz(e) {
     wx.navigateTo({ url: '/pages/quiz/play?id=' + e.currentTarget.dataset.id })
+  },
+  onShareAppMessage() {
+    return share.message('掼蛋课堂：会认牌之后，练怎么出', '/pages/advanced/index')
+  },
+  onShareTimeline() {
+    return share.timeline('掼蛋课堂：会认牌之后，练怎么出')
   }
 })

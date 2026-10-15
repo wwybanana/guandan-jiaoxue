@@ -1,5 +1,6 @@
 const { quizzes } = require('../../data/quizzes')
 const progress = require('../../utils/progress')
+const share = require('../../utils/share')
 
 function findQuiz(id) {
   for (let i = 0; i < quizzes.length; i += 1) {
@@ -30,6 +31,9 @@ Page({
     letters: ['A', 'B', 'C', 'D', 'E'],
     record: null,
     comment: ''
+  },
+  onShow() {
+    share.enable()
   },
   onLoad(query) {
     const quiz = findQuiz(query.id)
@@ -100,5 +104,15 @@ Page({
         wx.switchTab({ url: '/pages/advanced/index' })
       }
     })
+  },
+  onShareAppMessage() {
+    const quiz = this.data.quiz
+    if (!quiz) return share.message('掼蛋课堂：会认牌之后，练怎么出', '/pages/advanced/index')
+    return share.message('掼蛋课堂：' + quiz.title, '/pages/quiz/play?id=' + quiz.id)
+  },
+  onShareTimeline() {
+    const quiz = this.data.quiz
+    if (!quiz) return share.timeline('掼蛋课堂：会认牌之后，练怎么出')
+    return share.timeline('掼蛋课堂：' + quiz.title, 'id=' + quiz.id)
   }
 })
